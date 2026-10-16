@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Sisi Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{--rosa:#E6C6C6;--ciliegia:#8B001A;--antracite:#2E2E2E;--beige:#EDE1D6;--avorio:#F7F1E8;
+--H:min(34vh,290px);--W:calc(var(--H)*.86);--p:0;color-scheme:light;
+--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--beige);color:var(--antracite);font-family:"Cormorant Garamond",Georgia,serif;font-size:1.15rem;line-height:1.55}
+body::before{content:"";position:fixed;inset:0;background:var(--grain),linear-gradient(115deg,transparent 52%,rgba(120,70,60,.08) 60%,transparent 68%,rgba(120,70,60,.05) 80%,transparent);background-blend-mode:normal;opacity:.5;pointer-events:none}
+.script{font-family:"Pinyon Script","Snell Roundhand",cursive;font-weight:400}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+:focus-visible{outline:2px solid var(--ciliegia);outline-offset:3px}
+button{font:inherit;color:inherit;cursor:pointer}
+.spacer{height:260vh}
+.stage{position:fixed;inset:0;overflow:hidden}
+.assembly{position:absolute;top:9vh;left:50%;width:var(--W);height:var(--H);margin-left:calc(var(--W)/-2)}
+.back{position:absolute;inset:0 -2.5%;background:#D8B2B2;z-index:0;clip-path:polygon(0 8%,2.5% 0,97.5% 0,100% 8%,100% 100%,0 100%);transition:opacity .9s ease}
+.pocketw,.cardw{filter:drop-shadow(0 6px 10px rgba(80,40,40,.25))}
+.cardw{position:absolute;z-index:1;left:6%;top:6px;width:88%;height:calc(var(--H)*(.9 + .6*var(--p)));transform:translateY(calc(var(--p)*var(--H)*.55))}
+.rib{position:absolute;z-index:-1;left:50%;top:calc(var(--H)*-.15);width:calc(var(--W)*.13);height:calc(var(--H)*.22);margin-left:calc(var(--W)*-.065);background:var(--ciliegia);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.card{height:100%;background:var(--avorio);padding:calc(var(--H)*.16) 6% 0;text-align:center;position:relative;display:flex;flex-direction:column;align-items:center;gap:calc(var(--H)*.05)}
+.card::after,.pocket::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.3;pointer-events:none}
+.pocketw{position:absolute;inset:0;z-index:2;pointer-events:none;transition:opacity 1s ease,transform 1s ease}
+.done .pocketw,.done .back{opacity:0}.done .pocketw{transform:translateY(24px)}
+.pocket{position:relative;width:100%;height:100%;background:var(--rosa);
+-webkit-mask:radial-gradient(circle calc(var(--W)*.17) at 50% 0,transparent 97%,#000 100%);mask:radial-gradient(circle calc(var(--W)*.17) at 50% 0,transparent 97%,#000 100%);display:grid;place-items:center}
+.lg{display:flex;flex-direction:column;align-items:center;color:var(--ciliegia);line-height:1;position:relative;z-index:1}
+.lg i{font-style:normal;font-size:calc(var(--H)*.045);letter-spacing:.45em;margin-right:-.45em}
+.lg b{font-weight:500;font-size:calc(var(--H)*.13);letter-spacing:.22em;margin:.12em -.22em .1em 0}
+.lg u{display:block;width:calc(var(--H)*.09);height:1px;background:currentColor;margin-top:calc(var(--H)*.05)}
+.pocket img,.card img.logo{max-width:60%;position:relative;z-index:1}
+.cs{font-size:clamp(2.4rem,calc(var(--H)*.2),3.4rem);color:var(--ciliegia);line-height:.95;margin-top:calc(var(--H)*.04)}
+.card svg.bow{width:calc(var(--W)*.2);height:auto}
+.vl{width:1px;height:calc(var(--H)*.1);background:var(--ciliegia)}
+.flor{position:absolute;width:42%;height:auto;pointer-events:none}
+.reveal{opacity:0;transition:opacity 1s ease .2s}
+.done .reveal{opacity:1}
+.menu{list-style:none;margin:0;padding:0;display:grid;gap:.2em}
+.menu button{background:none;border:0;padding:.3em .6em;font-size:clamp(.85rem,calc(var(--H)*.05),1.05rem);letter-spacing:.3em;text-transform:uppercase}
+.menu button:hover{color:var(--ciliegia)}
+.hint{position:absolute;bottom:calc(14px + env(safe-area-inset-bottom,0px));width:100%;text-align:center;font-style:italic;opacity:calc(1 - var(--p)*12);letter-spacing:.15em}
+/* vellum */
+.vellum{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:8vw;background:rgba(237,225,214,.72);-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);transition:opacity 1.4s ease,backdrop-filter 1.4s ease}
+.vellum::before{content:"";position:absolute;inset:0;background:var(--grain),repeating-linear-gradient(97deg,rgba(255,255,255,.18) 0 2px,transparent 2px 7px);opacity:.55}
+.vellum.gone{opacity:0;-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);pointer-events:none}
+.motto{position:relative;margin:0;text-align:center;color:var(--ciliegia);font-size:clamp(2.2rem,7vw,4.6rem);line-height:1.25;max-width:14em;transition:opacity 1s ease}
+.gone .motto{opacity:0}
+.motto span{display:inline-block;clip-path:inset(-30% 100% -30% -5%);animation:pen var(--d,.3s) cubic-bezier(.4,.1,.5,1) var(--t,0s) forwards;white-space:pre}
+@keyframes pen{to{clip-path:inset(-30% -15% -30% -5%)}}
+.skip{position:absolute;bottom:calc(20px + env(safe-area-inset-bottom,0px));right:20px;z-index:2;background:none;border:1px solid var(--antracite);padding:.35em 1em;border-radius:2px;font-size:1rem}
+/* page panel */
+.panel{position:fixed;inset:0;z-index:40;background:var(--avorio);overflow:auto;visibility:hidden;clip-path:inset(var(--ct,0) var(--cr,0) var(--cb,0) var(--cl,0) round 4px);transition:clip-path .8s cubic-bezier(.6,0,.2,1),visibility 0s .8s}
+.panel.open{visibility:visible;clip-path:inset(0 0 0 0 round 0);transition:clip-path .8s cubic-bezier(.6,0,.2,1)}
+.panel header{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:.4em 2em;justify-content:space-between;align-items:center;padding:calc(14px + env(safe-area-inset-top,0px)) 5vw 14px;background:var(--avorio)}
+.panel .brand{color:var(--ciliegia);letter-spacing:.3em;font-size:1rem}
+.panel nav{display:flex;flex-wrap:wrap;gap:.2em 1.8em}
+.panel nav button,.panel .close{background:none;border:0;padding:.3em 0;border-bottom:1px solid transparent;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase}
+.panel nav button[aria-current=page]{color:var(--ciliegia);border-color:var(--ciliegia)}
+.panel main{max-width:68rem;margin:0 auto;padding:4vh 5vw 10vh}
+.split{display:grid;grid-template-columns:1fr 1.5fr;gap:4vw;align-items:start}
+@media(max-width:760px){.split{grid-template-columns:1fr}}
+.panel .num{color:var(--ciliegia);letter-spacing:.2em;font-size:.95rem}
+.panel h1{font-weight:500;font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:.2em;text-transform:uppercase;margin:.6em 0 .8em;color:var(--ciliegia)}
+.panel p{max-width:30em}
+.slot{aspect-ratio:4/3;display:grid;place-items:center;text-align:center;padding:1em;font-size:.95rem;font-style:italic;color:rgba(46,46,46,.6);background:linear-gradient(135deg,#F0DDD8,#E6C6C6);overflow:hidden}
+.slot img{width:100%;height:100%;object-fit:cover}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1.4rem;margin-top:3vh}
+.tiles .slot{aspect-ratio:1/.8}.tiles figcaption{margin-top:.6em;text-align:center;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase}
+.tiles figcaption span{display:block;text-transform:none;letter-spacing:0;font-size:1rem;opacity:.75;margin-top:.2em}
+.ph{border:1px dashed rgba(46,46,46,.4);padding:1em;color:rgba(46,46,46,.7);font-style:italic;margin:1em 0}
+form{display:grid;gap:.9em}label{display:grid;gap:.25em;font-size:.95rem}
+input,select,textarea{font:inherit;padding:.6em;background:#fff8;border:1px solid rgba(46,46,46,.35);border-radius:2px;color:var(--antracite)}
+.row{display:flex;gap:.6em;align-items:flex-start}.row input{margin-top:.35em}
+.btn{background:var(--antracite);color:var(--avorio);border:0;padding:.8em 1.6em;letter-spacing:.3em;text-transform:uppercase;font-size:.85rem}
+.err{color:var(--ciliegia);font-size:.95rem}
+#st{padding:.8em;border-left:3px solid var(--antracite);display:none}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important;animation-delay:0s!important}}
+</style>
+</head>
+<body>
+<h1 class="sr">The Sisi Lab — stationery per matrimoni ed eventi</h1>
+<div class="spacer"></div>
+<div class="stage" id="stage">
+  <div class="assembly">
+    <div class="cardw"><div class="card" id="card"></div></div>
+    <div class="pocketw" id="pocketw"><div class="pocket" id="pocket"></div></div>
+  </div>
+  <p class="hint">Scorri verso il basso</p>
+</div>
+<section class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pt" tabindex="-1"></section>
+<div class="vellum" id="vellum">
+  <p class="motto script" id="motto" aria-label=""></p>
+  <button class="skip" id="skip">Salta introduzione</button>
+</div>
+
+<script>
+/* ============ CONFIGURAZIONE CENTRALE ============ */
+const CONFIG={
+  mode:"comingSoon",               // "comingSoon" | "fullWebsite"  (anche ?mode=fullWebsite per l'anteprima)
+  motto:"Stationery for a more meaningful yes.",
+  logo:null,                       // es. "logo.svg": sostituisce THE SISI LAB (tasca e cartoncino)
+  palette:{rosa:"#E6C6C6",ciliegia:"#8B001A",antracite:"#2E2E2E",beige:"#EDE1D6",avorio:"#F7F1E8"},
+  formEndpoint:"",                 // URL servizio email (es. Formspree). Vuoto = nessun invio
+  privacyUrl:"",                   // [DA DEFINIRE]
+  contactEmail:"",                 // [DA DEFINIRE]
+  // img: percorso foto per ogni slot (null = segnaposto). Testi provvisori, da confermare con le fondatrici.
+  pages:{
+    about:{n:"01",label:"Chi siamo",intro:"Siamo due creative unite dalla passione per la carta, per i dettagli che raccontano storie e per la bellezza delle cose autentiche.",img:null,
+      note:"[DA INSERIRE] Nomi e biografie delle fondatrici, filosofia creativa, descrizione del laboratorio, due progetti rappresentativi.",
+      tiles:[{cap:"Il laboratorio"},{cap:"Making-of"},{cap:"Le fondatrici"}]},
+    stationery:{n:"02",label:"Stationery",intro:"Inviti, dettagli e coordinati su misura per raccontare la vostra storia con eleganza e personalità.",img:null,
+      tiles:[{cap:"Wedding Invitations",txt:"Save the Date, partecipazioni, RSVP, details card"},{cap:"Wedding Day",txt:"Menu, tableau de mariage, segnaposto, numeri tavolo, signage"},{cap:"Bespoke Details",txt:"Monogrammi, illustrazioni, pattern, lavorazioni speciali"}]},
+    events:{n:"03",label:"Events",intro:"Workshop creativi, pop-up, collaborazioni ed eventi speciali dove la carta incontra la condivisione.",img:null,
+      note:"[DA INSERIRE] Per ogni evento: titolo, foto, testo, data, luogo, modalità di partecipazione.",
+      tiles:[{cap:"Prossimi eventi",txt:"[DA INSERIRE]"},{cap:"Eventi passati",txt:"[DA INSERIRE]"}]},
+    contact:{n:"04",label:"Contatti",intro:"Raccontaci la tua idea. Saremo felici di conoscerti e creare insieme un progetto unico e su misura.",form:true}
+  }
+};
+const P=new URLSearchParams(location.search).get("mode");
+if(P==="fullWebsite"||P==="comingSoon")CONFIG.mode=P;
+const full=CONFIG.mode==="fullWebsite",$=id=>document.getElementById(id);
+for(const k in CONFIG.palette)document.documentElement.style.setProperty("--"+k,CONFIG.palette[k]);
+
+/* ============ TASCA + CARTONCINO ============ */
+const LOGO=CONFIG.logo?`<img class="logo" src="${CONFIG.logo}" alt="The Sisi Lab">`:`<div class="lg" role="img" aria-label="The Sisi Lab"><i>THE</i><b>SISI</b><i>LAB</i><u></u></div>`;
+const R=(a,b)=>a+Math.random()*(b-a);
+function blossom(x,y,r){let t=`<g transform="translate(${x} ${y})">`;for(let k=0;k<5;k++){const a=k*72*Math.PI/180;t+=`<circle cx="${Math.cos(a)*r*.8}" cy="${Math.sin(a)*r*.8}" r="${r*.7}" fill="#E39AA4" opacity=".85"/>`}return t+`<circle r="${r*.3}" fill="#8B001A"/></g>`}
+const flor=(cls,tr)=>`<svg class="flor reveal ${cls}" viewBox="0 0 100 110" aria-hidden="true" style="${tr}"><path d="M8 105C18 70 38 45 85 8M30 70c10-8 14-20 12-32M52 48c10-2 20-10 24-22" fill="none" stroke="#B5525F" stroke-width="1.3" stroke-linecap="round"/>${blossom(85,9,7)}${blossom(42,36,6)}${blossom(76,24,5)}${blossom(24,70,5)}${blossom(10,100,4)}</svg>`;
+$("pocket").innerHTML=LOGO;
+$("pocketw").insertAdjacentHTML("beforebegin",'<div class="back"></div>');
+const bow=`<svg class="bow" viewBox="0 0 60 36" fill="none" stroke="#8B001A" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M30 18C20 4 4 6 6 16s20 4 24 2c4 2 22 8 24-2S40 4 30 18z"/><path d="M30 18l-8 16M30 18l8 16"/></svg>`;
+$("card").innerHTML=LOGO+(full
+ ?`<ul class="menu reveal"><li><span class="vl" style="display:block;margin:0 auto .3em"></span></li>${Object.entries(CONFIG.pages).map(([k,v])=>`<li><button data-k="${k}">${v.label}</button></li>`).join("")}</ul><div class="reveal" style="margin-top:auto;padding-bottom:12%">${bow}</div>${flor("","top:2%;left:-2%")}${flor("","bottom:2%;right:-2%;transform:rotate(180deg)")}${flor("","bottom:2%;left:-2%;transform:scaleY(-1) rotate(0deg);width:34%")}`
+ :`<div class="cs script reveal">Coming<br>Soon</div><div class="reveal">${bow}</div><div class="vl reveal"></div>`);
+document.querySelector(".cardw").insertAdjacentHTML("afterbegin",'<div class="rib"></div>');
+// bordi irregolari (carta a mano)
+function deckle(el,amp,n){const q=[];for(let i=0;i<=n;i++)q.push([i/n*100,R(0,amp)]);for(let i=1;i<=n*2;i++)q.push([100-R(0,amp*.6),i/(n*2)*100]);for(let i=n;i>=0;i--)q.push([i/n*100,100-R(0,amp)]);for(let i=n*2-1;i>0;i--)q.push([R(0,amp*.6),i/(n*2)*100]);el.style.clipPath="polygon("+q.map(p=>p[0].toFixed(2)+"% "+p[1].toFixed(2)+"%").join(",")+")"}
+deckle($("card"),full?.55:.25,full?60:30);
+
+/* ============ SCROLL-LINKED DISCESA (verso il basso) ============ */
+const root=document.documentElement;let tick=false;
+function upd(){tick=false;const m=root.scrollHeight-innerHeight,p=m>0?Math.min(1,Math.max(0,scrollY/m)):0;
+ root.style.setProperty("--p",(1-Math.pow(1-p,1.6)).toFixed(4)); // easing leggero
+ $("stage").classList.toggle("done",p>.97);
+ document.querySelectorAll(".menu button").forEach(b=>b.tabIndex=p>.97?0:-1);}
+addEventListener("scroll",()=>{if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});addEventListener("resize",upd);upd();
+
+/* ============ INTRO: VELLUM + CALLIGRAFIA ============ */
+const motto=$("motto"),chars=[...CONFIG.motto],DUR=3500;motto.setAttribute("aria-label",CONFIG.motto);
+let acc=0;const w=chars.map(c=>c===" "?.5:c==="."?.4:.7+Math.random()*.6),tot=w.reduce((a,b)=>a+b,0);
+chars.forEach((c,i)=>{const s=document.createElement("span");s.textContent=c;s.setAttribute("aria-hidden","true");
+ s.style.setProperty("--t",(acc/tot*DUR/1000*.92).toFixed(3)+"s");s.style.setProperty("--d",(w[i]/tot*DUR/1000*1.6+.12).toFixed(3)+"s");acc+=w[i];motto.appendChild(s)});
+let finished=false,timer;
+function endIntro(){if(finished)return;finished=true;clearTimeout(timer);$("vellum").classList.add("gone");document.body.style.overflow="";
+ setTimeout(()=>$("vellum").remove(),1600);}
+document.body.style.overflow="hidden";
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+if(reduce)endIntro();else timer=setTimeout(endIntro,DUR+900+400);
+$("skip").onclick=endIntro;
+
+/* ============ SEZIONI (solo fullWebsite) ============ */
+const panel=$("panel");let cur=null;
+const slot=(img,t)=>`<div class="slot">${img?`<img src="${img}" alt="">`:`<span>${t||"[foto da inserire]"}</span>`}</div>`;
+function render(k){cur=k;const pg=CONFIG.pages[k];
+ const nav=Object.entries(CONFIG.pages).map(([n,v])=>`<button data-n="${n}" ${n===k?'aria-current="page"':""}>${v.label}</button>`).join("");
+ const left=`<div><div class="num">${pg.n}</div><h1 id="pt" tabindex="-1">${pg.label}</h1><p>${pg.intro}</p>${pg.note?`<div class="ph">${pg.note}</div>`:""}${pg.form&&CONFIG.contactEmail?`<p>${CONFIG.contactEmail}</p>`:""}</div>`;
+ const right=pg.form?formHTML():slot(pg.img);
+ const tiles=pg.tiles?`<div class="tiles">${pg.tiles.map(t=>`<figure style="margin:0">${slot(t.img)}<figcaption>${t.cap}${t.txt?`<span>${t.txt}</span>`:""}</figcaption></figure>`).join("")}</div>`:"";
+ panel.innerHTML=`<header><span class="brand">THE SISI LAB</span><nav aria-label="Sezioni">${nav}</nav><button class="close" id="cl">Torna all'invito</button></header><main><div class="split">${left}${right}</div>${tiles}</main>`;
+ panel.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{render(b.dataset.n);panel.scrollTop=0;$("pt").focus()});
+ $("cl").onclick=closeP;if(pg.form)bindForm();}
+function openP(k,btn){const r=$("card").getBoundingClientRect(),W=innerWidth,H=innerHeight;
+ panel.style.setProperty("--ct",Math.max(0,r.top)+"px");panel.style.setProperty("--cl",r.left+"px");
+ panel.style.setProperty("--cr",Math.max(0,W-r.right)+"px");panel.style.setProperty("--cb",Math.max(0,H-r.bottom)+"px");
+ render(k);panel.offsetWidth;panel.classList.add("open");setTimeout(()=>$("pt").focus(),500);panel._from=btn;}
+function closeP(){panel.classList.remove("open");panel._from&&panel._from.focus()}
+document.querySelectorAll(".menu button").forEach(b=>b.onclick=()=>openP(b.dataset.k,b));
+addEventListener("keydown",e=>{if(e.key==="Escape"&&panel.classList.contains("open"))closeP()});
+
+function formHTML(){return `<form id="f" novalidate>
+<label>Nome e cognome<input name="nome" required autocomplete="name"><span class="err" data-e="nome"></span></label>
+<label>Email<input name="email" type="email" required autocomplete="email"><span class="err" data-e="email"></span></label>
+<label>Data dell'evento<input name="data" type="date"></label>
+<label>Tipologia di evento<select name="tipo"><option>Wedding Invitations</option><option>Wedding Day</option><option>Bespoke Details</option><option>Evento / workshop</option></select></label>
+<label>Messaggio<textarea name="msg" rows="5" required></textarea><span class="err" data-e="msg"></span></label>
+<div class="row"><input type="checkbox" id="pv" name="pv" required><label for="pv">Ho letto l'informativa privacy ${CONFIG.privacyUrl?`(<a href="${CONFIG.privacyUrl}">leggi</a>)`:"[DA DEFINIRE]"} e acconsento al trattamento dei dati.</label></div>
+<span class="err" data-e="pv"></span><button class="btn" type="submit">Invia messaggio</button><div id="st" role="status"></div></form>`}
+function bindForm(){const f=$("f"),st=$("st");f.onsubmit=async e=>{e.preventDefault();let ok=true;
+ f.querySelectorAll("[data-e]").forEach(s=>s.textContent="");
+ const bad=(n,t)=>{f.querySelector(`[data-e=${n}]`).textContent=t;ok=false};
+ if(!f.nome.value.trim())bad("nome","Inserisci nome e cognome.");
+ if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value))bad("email","Inserisci un indirizzo email valido.");
+ if(!f.msg.value.trim())bad("msg","Scrivi un messaggio.");
+ if(!f.pv.checked)bad("pv","Il consenso privacy è necessario per inviare.");
+ st.style.display="block";if(!ok){st.textContent="Controlla i campi evidenziati.";return}
+ if(!CONFIG.formEndpoint){st.textContent="Modulo non ancora collegato a un servizio email: nessun messaggio è stato inviato.";return}
+ try{const r=await fetch(CONFIG.formEndpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(Object.fromEntries(new FormData(f)))});
+  st.textContent=r.ok?"Messaggio inviato. Ti risponderemo presto.":"Invio non riuscito. Riprova o scrivici direttamente.";if(r.ok)f.reset()}
+ catch{st.textContent="Invio non riuscito. Controlla la connessione e riprova."}}}
+</script>
+</body>
+</html>
