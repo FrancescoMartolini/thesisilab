@@ -8,7 +8,7 @@ export const SITE = {
   mode: MODE,                         // "comingSoon" | "fullWebsite"
   brand: "The Sisi Lab",
   motto: "Stationery for a more meaningful yes.",   // provvisorio
-  pocketImage: "assets/monogramma.jpg",   // fronte della tasca (monogramma in rilievo su carta). null = tasca rosa
+  pocketImage: "assets/sfondo_ampio.jpg",   // fronte della tasca (monogramma in rilievo su carta). null = tasca rosa
   pattern: "assets/pattern.webp",          // pattern dello sfondo del sito. null = sfondo beige liscio
   logo: null,                         // es. "assets/logo.svg" (in /public). null = logo tipografico
   palette: { rosa: "#D9BAD5", ciliegia: "#8B001A", antracite: "#2E2E2E", beige: "#EDE1D6", avorio: "#F7F1E8" },
