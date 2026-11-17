@@ -1,0 +1,323 @@
+.spacer {
+  height: 260vh;
+}
+.stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+.assembly {
+  position: absolute;
+  top: 9vh;
+  left: 50%;
+  width: var(--W);
+  height: var(--H);
+  margin-left: calc(var(--W) / -2);
+}
+.back {
+  position: absolute;
+  inset: 0 -2.5%;
+  background: #c7a2c3;
+  z-index: 0;
+  clip-path: polygon(0 8%, 2.5% 0, 97.5% 0, 100% 8%, 100% 100%, 0 100%);
+  transition: opacity 0.9s ease;
+}
+.pocketw,
+.cardw {
+  filter: drop-shadow(0 6px 10px rgba(80, 40, 40, 0.25));
+}
+.cardw {
+  position: absolute;
+  z-index: 1;
+  left: 6%;
+  top: 6px;
+  width: 88%;
+  height: calc(var(--H) * (0.9 + 0.6 * var(--p)));
+  transform: translateY(calc(var(--p) * var(--H) * 0.55));
+}
+.rib {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: calc(var(--H) * -0.15);
+  width: calc(var(--W) * 0.13);
+  height: calc(var(--H) * 0.22);
+  margin-left: calc(var(--W) * -0.065);
+  background: var(--ciliegia);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+.card {
+  height: 100%;
+  background: var(--avorio);
+  padding: calc(var(--H) * 0.16) 6% 0;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--H) * 0.05);
+}
+.card::after,
+.pocket::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  opacity: 0.3;
+  pointer-events: none;
+}
+.pocketw {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+}
+.done .pocketw,
+.done .back {
+  opacity: 0;
+}
+.done .pocketw {
+  transform: translateY(24px);
+}
+.pocket {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--rosa);
+  -webkit-mask: radial-gradient(
+    circle calc(var(--W) * 0.17) at 50% 0,
+    transparent 97%,
+    #000 100%
+  );
+  mask: radial-gradient(
+    circle calc(var(--W) * 0.17) at 50% 0,
+    transparent 97%,
+    #000 100%
+  );
+  display: grid;
+  place-items: center;
+}
+.lg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--ciliegia);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+.lg i {
+  font-style: normal;
+  font-size: calc(var(--H) * 0.045);
+  letter-spacing: 0.45em;
+  margin-right: -0.45em;
+}
+.lg b {
+  font-weight: 500;
+  font-size: calc(var(--H) * 0.13);
+  letter-spacing: 0.22em;
+  margin: 0.12em -0.22em 0.1em 0;
+}
+.lg u {
+  display: block;
+  width: calc(var(--H) * 0.09);
+  height: 1px;
+  background: currentColor;
+  margin-top: calc(var(--H) * 0.05);
+}
+.pocket img,
+.card img.logo {
+  max-width: 60%;
+  position: relative;
+  z-index: 1;
+}
+.cs {
+  font-size: clamp(2.4rem, calc(var(--H) * 0.2), 3.4rem);
+  color: var(--ciliegia);
+  line-height: 0.95;
+  margin-top: calc(var(--H) * 0.04);
+}
+.card svg.bow {
+  width: calc(var(--W) * 0.2);
+  height: auto;
+}
+.vl {
+  width: 1px;
+  height: calc(var(--H) * 0.1);
+  background: var(--ciliegia);
+}
+.flor {
+  position: absolute;
+  width: 42%;
+  height: auto;
+  pointer-events: none;
+}
+.reveal {
+  opacity: 0;
+  transition: opacity 1s ease 0.2s;
+}
+.done .reveal {
+  opacity: 1;
+}
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.2em;
+}
+.menu button {
+  background: none;
+  border: 0;
+  padding: 0.3em 0.6em;
+  font-size: clamp(0.85rem, calc(var(--H) * 0.05), 1.05rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.menu button:hover {
+  color: var(--ciliegia);
+}
+.hint {
+  position: absolute;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  width: 100%;
+  text-align: center;
+  font-style: italic;
+  opacity: calc(1 - var(--p) * 12);
+  letter-spacing: 0.15em;
+}
+/* vellum */
+.vellum {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 8vw;
+  background: rgba(237, 225, 214, 0.72);
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+  transition:
+    opacity 1.4s ease,
+    backdrop-filter 1.4s ease;
+}
+.vellum::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    var(--grain),
+    repeating-linear-gradient(
+      97deg,
+      rgba(255, 255, 255, 0.18) 0 2px,
+      transparent 2px 7px
+    );
+  opacity: 0.55;
+}
+.vellum.gone {
+  opacity: 0;
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+  pointer-events: none;
+}
+.motto {
+  position: relative;
+  margin: 0;
+  text-align: center;
+  color: var(--ciliegia);
+  font-size: clamp(2.2rem, 7vw, 4.6rem);
+  line-height: 1.25;
+  max-width: 14em;
+  transition: opacity 1s ease;
+}
+.gone .motto {
+  opacity: 0;
+}
+.motto span {
+  display: inline-block;
+  clip-path: inset(-30% 100% -30% -5%);
+  animation: pen var(--d, 0.3s) cubic-bezier(0.4, 0.1, 0.5, 1) var(--t, 0s)
+    forwards;
+  white-space: pre;
+}
+@keyframes pen {
+  to {
+    clip-path: inset(-30% -15% -30% -5%);
+  }
+}
+.skip {
+  position: absolute;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  right: 20px;
+  z-index: 2;
+  background: none;
+  border: 1px solid var(--antracite);
+  padding: 0.35em 1em;
+  border-radius: 2px;
+  font-size: 1rem;
+}
+
+.vl-top {
+  display: block;
+  margin: 0 auto 0.3em;
+}
+.bow-wrap {
+  margin-top: auto;
+  padding-bottom: 12%;
+}
+.flor.tl {
+  top: 2%;
+  left: -2%;
+}
+.flor.br {
+  bottom: 2%;
+  right: -2%;
+  transform: rotate(180deg);
+}
+.flor.bl {
+  bottom: 2%;
+  left: -2%;
+  transform: scaleY(-1);
+  width: 34%;
+}
+
+/* tasca con foto del monogramma */
+.pocket.photo {
+  background: var(--beige);
+}
+.pocket.photo::after {
+  display: none;
+}
+.pocket.photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 43%;
+}
+/* ombra morbida lungo il bordo superiore: separa la tasca dal cartoncino */
+.pocket.photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(90, 60, 40, 0.22), transparent 7%);
+  pointer-events: none;
+}
+/* retro della tasca: stessa carta, un tono più scura */
+.back.paper {
+  background: #d8c8b4;
+}
+.back.paper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--paper) center / cover;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}

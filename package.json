@@ -1,0 +1,16 @@
+{
+  "name": "the-sisi-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:site": "cross-env VITE_SITE_MODE=fullWebsite vite",
+    "build": "vite build",
+    "build:coming-soon": "cross-env VITE_SITE_MODE=comingSoon vite build",
+    "build:site": "cross-env VITE_SITE_MODE=fullWebsite vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": { "react": "^18.3.1", "react-dom": "^18.3.1" },
+  "devDependencies": { "@vitejs/plugin-react": "^4.3.0", "cross-env": "^7.0.3", "vite": "^5.4.0" }
+}
