@@ -4,7 +4,7 @@ export default function Logo() {
   if (SITE.logo) return <img className="logo" src={SITE.logo} alt={SITE.brand} />;
   return (
     <div className="lg" role="img" aria-label={SITE.brand}>
-      <i>THE</i><b>SISI</b><i>LAB</i><u />
+      <i>THE SISI LAB</i><u />
     </div>
   );
 }

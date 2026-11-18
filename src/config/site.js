@@ -8,6 +8,7 @@ export const SITE = {
   mode: MODE,                         // "comingSoon" | "fullWebsite"
   brand: "The Sisi Lab",
   motto: "Stationery for a more meaningful yes.",   // provvisorio
+  comingSoonText: "Magic is about to Happen",       // scritta sul cartoncino in modalità Coming Soon
   pocketImage: "assets/sfondo_ampio.jpg",   // fronte della tasca (monogramma in rilievo su carta). null = tasca rosa
   pattern: "assets/pattern.webp",          // pattern dello sfondo del sito. null = sfondo beige liscio
   logo: null,                         // es. "assets/logo.svg" (in /public). null = logo tipografico

@@ -134,10 +134,20 @@
   position: relative;
   z-index: 1;
 }
-.cs {
-  font-size: clamp(2.4rem, calc(var(--H) * 0.2), 3.4rem);
+@font-face {
+  font-family: "Bemdayni";
+  src: url("/fonts/Bemdayni Demo.otf") format("opentype");
+  font-display: swap;
+}
+.cs,
+.cs.script {
+  font-family: "Bemdayni", cursive;
+  font-size: clamp(1.9rem, calc(var(--H) * 0.14), 2.6rem);
   color: var(--ciliegia);
-  line-height: 0.95;
+  line-height: 1.05;
+  text-align: center;
+  text-wrap: balance;
+  max-width: 88%;
   margin-top: calc(var(--H) * 0.04);
 }
 .card svg.bow {
