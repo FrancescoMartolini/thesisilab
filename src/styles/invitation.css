@@ -148,7 +148,19 @@
   text-align: center;
   text-wrap: balance;
   max-width: 88%;
-  margin-top: calc(var(--H) * 0.04);
+  margin-top: 1.6em;
+}
+.stay-tuned {
+  /* stesso stile e stessa scala del "THE SISI LAB" in alto (.lg i) */
+  margin: calc(var(--H) * 0.03) -0.45em 0 0;
+  font-size: calc(var(--H) * 0.045);
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ciliegia);
+  white-space: nowrap;
+  margin-top: auto;
+  margin-bottom: 1.5em;
 }
 .card svg.bow {
   width: calc(var(--W) * 0.2);
